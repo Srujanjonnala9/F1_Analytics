@@ -1,117 +1,70 @@
-# F1_Analytics
 # 🏎️ F1 Race Analytics
 
 An end-to-end Formula 1 data analytics project analyzing **Miami and Abu Dhabi Grand Prix data from 2023–2025** using **FastF1, Python, Jupyter Notebook, PostgreSQL, SQL, and Power BI**.
 
-The project extracts Formula 1 race data, processes and analyzes it using Python, pushes the processed tables to PostgreSQL, creates a consolidated database view by combining the required tables, and uses that view as the data source for interactive Power BI dashboards.
+The project extracts Formula 1 race data, processes and analyzes it using Python, pushes the processed tables to PostgreSQL, creates a consolidated view by combining the required tables using `UNION`, and uses the consolidated view as the data source for interactive Power BI dashboards.
 
 ---
 
 ## 📌 Project Overview
 
-Formula 1 produces a large amount of race and performance data. This project uses that data to analyze race performance across multiple seasons and Grand Prix events.
+Formula 1 generates a large amount of race and performance data. This project uses that data to analyze race performance across multiple seasons and Grand Prix events.
 
 The project focuses on:
 
-* **Miami Grand Prix**
-* **Abu Dhabi Grand Prix**
-* **2023–2025 seasons**
+* 🏁 **Miami Grand Prix**
+* 🏁 **Abu Dhabi Grand Prix**
+* 📅 **2023–2025 seasons**
 
-The complete workflow is:
+The complete data pipeline is:
 
-**FastF1 → Jupyter Notebook → PostgreSQL → Power BI**
+**FastF1 → Jupyter Notebook / Python → PostgreSQL → Power BI**
 
-Python and Jupyter Notebook are responsible for both the data processing and the PostgreSQL integration.
+Python and Jupyter Notebook handle the data extraction, processing, PostgreSQL integration, table upload, and consolidated-view creation.
 
 ---
 
 # 🏗️ System Architecture
 
-```text
-┌──────────────────────────────┐
-│           FastF1             │
-│                              │
-│   Formula 1 Race Data        │
-│   Miami & Abu Dhabi          │
-│   2023 – 2025                │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│     Jupyter Notebook         │
-│          Python              │
-│                              │
-│ • Data Extraction            │
-│ • Data Processing            │
-│ • Data Analysis              │
-│ • PostgreSQL Connection      │
-│ • Push Tables to PostgreSQL  │
-│ • Create Consolidated View   │
-│ • UNION Multiple Tables      │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│         PostgreSQL           │
-│                              │
-│ • Stores Processed Tables    │
-│ • Stores Consolidated View   │
-│ • Central Data Source        │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│           Power BI           │
-│                              │
-│ • Interactive Dashboards     │
-│ • Race Analysis              │
-│ • Lap Analysis               │
-│ • Sector Analysis            │
-│ • Speed Analysis             │
-│ • Driver Comparison          │
-└──────────────────────────────┘
-```
+<p align="center">
+  <img src="images/architecture.png" alt="F1 Race Analytics System Architecture" width="900">
+</p>
 
-### Architecture Explanation
+### Architecture Flow
 
-#### 1. FastF1
+**FastF1 → Jupyter Notebook → PostgreSQL → Power BI**
 
-FastF1 is used to retrieve Formula 1 race data for the selected Grand Prix events and seasons.
+### FastF1
 
-**Data covered:**
+Used to extract Formula 1 race data for the selected Grand Prix events and seasons.
 
-* Miami Grand Prix — 2023–2025
-* Abu Dhabi Grand Prix — 2023–2025
+### Jupyter Notebook / Python
 
-#### 2. Jupyter Notebook / Python
-
-The main data workflow is performed in Python inside Jupyter Notebook.
+The main processing layer of the project.
 
 Python is used to:
 
 * Extract data using FastF1
-* Process and prepare the datasets
+* Process and prepare datasets
 * Perform data analysis
-* Establish a connection to PostgreSQL using database credentials
-* Push the processed datasets into PostgreSQL as tables
-* Create a consolidated PostgreSQL view
-* Use `UNION` to combine the required tables into a single dataset
+* Connect to PostgreSQL
+* Push processed datasets into PostgreSQL as tables
+* Create the consolidated database view
+* Combine the required tables using `UNION`
 
-Therefore, the PostgreSQL upload and consolidated-view creation are automated through the Python/Jupyter workflow.
+### PostgreSQL
 
-#### 3. PostgreSQL
+Acts as the database layer.
 
-PostgreSQL acts as the database layer where the processed tables and consolidated view are stored.
-
-The database contains:
+It stores:
 
 * Processed race-data tables
 * Consolidated view
-* Combined dataset used for Power BI
+* Combined dataset used by Power BI
 
-#### 4. Power BI
+### Power BI
 
-Power BI connects to the **consolidated PostgreSQL view** and uses it as the primary data source for the interactive dashboards.
+Connects to the consolidated PostgreSQL view and provides the interactive visualization layer.
 
 ---
 
@@ -119,34 +72,33 @@ Power BI connects to the **consolidated PostgreSQL view** and uses it as the pri
 
 ```text
 F1 Race Data
-     │
-     ▼
+      │
+      ▼
    FastF1
-     │
-     ▼
-Python / Jupyter Notebook
-     │
-     ├── Extract Data
-     ├── Process Data
-     ├── Analyze Data
-     │
-     ├── Connect to PostgreSQL
-     │
-     ├── Push Tables
-     │
-     └── Create View
-            │
-            └── UNION Tables
-                    │
-                    ▼
-               PostgreSQL
-                    │
-                    │ Consolidated View
-                    ▼
-                 Power BI
-                    │
-                    ▼
-            Interactive Dashboard
+      │
+      ▼
+Jupyter Notebook / Python
+      │
+      ├── Data Extraction
+      ├── Data Processing
+      ├── Data Analysis
+      │
+      ├── PostgreSQL Connection
+      ├── Push Tables
+      │
+      └── Create Consolidated View
+                 │
+                 └── UNION Required Tables
+                          │
+                          ▼
+                     PostgreSQL
+                          │
+                          │ Consolidated View
+                          ▼
+                       Power BI
+                          │
+                          ▼
+                 Interactive Dashboard
 ```
 
 ---
@@ -156,10 +108,12 @@ Python / Jupyter Notebook
 * Extract Formula 1 race data using FastF1.
 * Analyze Miami and Abu Dhabi Grand Prix data from 2023–2025.
 * Process and prepare race datasets using Python.
-* Automate the transfer of processed data into PostgreSQL.
-* Create a consolidated PostgreSQL view using Python and SQL.
-* Combine multiple tables using `UNION`.
-* Use the consolidated view as a Power BI data source.
+* Perform exploratory and analytical operations using Jupyter Notebook.
+* Connect Python to PostgreSQL.
+* Push processed datasets into PostgreSQL as tables.
+* Create a consolidated database view through Python.
+* Combine the required tables using `UNION`.
+* Use the consolidated view as the Power BI data source.
 * Build interactive dashboards for Formula 1 race analysis.
 * Analyze race, lap, sector, speed, and driver performance.
 
@@ -167,96 +121,167 @@ Python / Jupyter Notebook
 
 # 🛠️ Technologies Used
 
-| Technology           | Purpose                                             |
-| -------------------- | --------------------------------------------------- |
-| **Python**           | Data processing, analysis, and database integration |
-| **FastF1**           | Formula 1 data extraction                           |
-| **Jupyter Notebook** | Development and analysis environment                |
-| **PostgreSQL**       | Data storage and consolidated database view         |
-| **SQL**              | Database operations and table consolidation         |
-| **Power BI**         | Interactive data visualization                      |
-| **DAX**              | Power BI calculations and measures                  |
+| Technology              | Purpose                                             |
+| ----------------------- | --------------------------------------------------- |
+| 🐍 **Python**           | Data processing, analysis, and database integration |
+| 🏎️ **FastF1**          | Formula 1 data extraction                           |
+| 📓 **Jupyter Notebook** | Development, processing, and analysis               |
+| 🐘 **PostgreSQL**       | Data storage and consolidated database view         |
+| 🗄️ **SQL**             | Database operations and table consolidation         |
+| 📊 **Power BI**         | Interactive data visualization                      |
+| 📐 **DAX**              | Power BI calculations and measures                  |
 
 ---
 
-# 📊 Data Analysis
+# 📊 Data Source
 
-The project analyzes Formula 1 data from multiple perspectives.
+The project uses Formula 1 data extracted through the **FastF1 Python library**.
 
-### 🏁 Race Performance
+### Grand Prix Events
 
-Analysis of race-level performance and comparison between drivers and races.
+* Miami Grand Prix
+* Abu Dhabi Grand Prix
 
-### ⏱️ Lap Analysis
+### Seasons
 
-Analysis of lap-level performance and lap times to understand race pace.
+* 2023
+* 2024
+* 2025
 
-### 📐 Sector Analysis
+The extracted data is processed in Python before being pushed into PostgreSQL.
 
-Comparison of performance across:
+---
+
+# 🔧 Data Processing & Database Integration
+
+The data-processing workflow is performed directly through Python in Jupyter Notebook.
+
+### Step 1 — Data Extraction
+
+FastF1 is used to retrieve the required Formula 1 race data.
+
+### Step 2 — Data Processing
+
+The extracted data is processed and prepared using Python.
+
+### Step 3 — PostgreSQL Connection
+
+The Python code establishes a connection to PostgreSQL using the required database credentials.
+
+### Step 4 — Push Tables
+
+The processed datasets are pushed from Python into PostgreSQL as database tables.
+
+### Step 5 — Create Consolidated View
+
+The Python workflow creates a PostgreSQL view.
+
+The view uses `UNION` to combine the required tables into a single consolidated dataset.
+
+### Step 6 — Power BI Connection
+
+Power BI connects directly to the consolidated PostgreSQL view.
+
+---
+
+# 📈 Dashboard Analysis
+
+The consolidated PostgreSQL view is used to build interactive Power BI dashboards.
+
+The dashboard covers multiple areas of Formula 1 analysis.
+
+## 🏁 Race Performance Analysis
+
+Provides race-level performance insights and enables comparisons across drivers and races.
+
+## ⏱️ Lap Analysis
+
+Analyzes lap-level performance and lap times to understand race pace.
+
+## 📐 Sector Analysis
+
+Analyzes performance across the three circuit sectors:
 
 * Sector 1
 * Sector 2
 * Sector 3
 
-### ⚡ Speed Analysis
+## ⚡ Speed Analysis
 
-Analysis of speed-related metrics to understand performance across the circuit.
+Analyzes speed-related metrics to understand performance across different parts of the circuit.
 
-### 👤 Driver Comparison
+## 👤 Driver Comparison
 
-Comparison of driver performance using different race and performance metrics.
+Provides comparison of driver performance using different race and performance metrics.
 
 ---
 
-# 📈 Power BI Dashboard
+# 📊 Power BI Dashboard
 
-The consolidated PostgreSQL view is connected to Power BI to create interactive dashboards.
+The PostgreSQL consolidated view is connected to Power BI to create interactive dashboards.
 
-The dashboard provides:
+The dashboard includes:
 
 * Interactive filters
 * Driver comparisons
 * Race-level analysis
 * Lap analysis
-* Sector performance analysis
+* Sector analysis
 * Speed analysis
 * Interactive visualizations
 
+### Dashboard Preview
 
+<p align="center">
+  <img src="<img width="1375" height="764" alt="Architecture Diagram_F1" src="https://github.com/user-attachments/assets/84d8b55c-ed14-4b39-95bc-1ae96cb499dd" />
+" alt="F1 Race Analytics Dashboard" width="900">
+</p>
+
+> Add additional dashboard screenshots to the `images` folder as needed.
 
 ---
 
-# 🔗 Database Workflow
-
-The PostgreSQL integration is automated through Python.
-
-The workflow is:
+# 🔗 End-to-End Workflow
 
 ```text
-Python Code
-     │
-     │ PostgreSQL Credentials
-     ▼
-PostgreSQL Connection
-     │
-     ▼
-Push Processed Tables
-     │
-     ▼
-Create Consolidated View
-     │
-     ▼
-UNION Required Tables
-     │
-     ▼
-Consolidated View
-     │
-     ▼
-Power BI
+┌──────────────┐
+│    FastF1    │
+└──────┬───────┘
+       │
+       │ Extract F1 Data
+       ▼
+┌──────────────────────┐
+│ Jupyter / Python     │
+│                      │
+│ • Process Data       │
+│ • Analyze Data       │
+│ • Connect PostgreSQL │
+│ • Push Tables        │
+│ • Create View        │
+│ • UNION Tables       │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│     PostgreSQL       │
+│                      │
+│ • Store Tables       │
+│ • Store View         │
+│ • Consolidated Data  │
+└──────────┬───────────┘
+           │
+           │ Consolidated View
+           ▼
+┌──────────────────────┐
+│       Power BI       │
+│                      │
+│ • Race Analysis      │
+│ • Lap Analysis       │
+│ • Sector Analysis    │
+│ • Speed Analysis     │
+│ • Driver Comparison  │
+└──────────────────────┘
 ```
-
-The consolidated view provides a single structured dataset for the Power BI dashboard.
 
 ---
 
@@ -278,71 +303,69 @@ F1-Race-Analytics/
 │
 └── images/
     ├── architecture.png
-    ├── dashboard-overview.png
-    ├── race-performance.png
-    ├── lap-analysis.png
-    └── sector-speed-analysis.png
+    └── dashboard-overview.png
 ```
 
-> Update the filenames above to match the actual files uploaded to the repository.
+> Update the filenames to match the actual files in your repository.
 
 ---
 
-# 🚀 How the Project Works
+# 🚀 How to Run the Project
 
-### Step 1 — Extract Data
+## 1. Run the Jupyter Notebook
 
-Run the Jupyter Notebook to retrieve the required Formula 1 data using FastF1.
+Open the `.ipynb` file in Jupyter Notebook or JupyterLab.
 
-### Step 2 — Process Data
+Run the Python workflow to:
 
-The extracted datasets are processed and prepared using Python.
+1. Extract Formula 1 data using FastF1.
+2. Process the datasets.
+3. Perform the required analysis.
+4. Connect to PostgreSQL.
+5. Push the processed tables into PostgreSQL.
+6. Create the consolidated view.
+7. Combine the required tables using `UNION`.
 
-### Step 3 — Connect to PostgreSQL
+## 2. PostgreSQL
 
-The Python code establishes a PostgreSQL connection using the required database credentials.
+Ensure PostgreSQL is running and the required database is available.
 
-### Step 4 — Push Tables
+The Python code establishes the database connection and creates/populates the required tables and consolidated view.
 
-The processed datasets are pushed from Python into PostgreSQL as database tables.
+## 3. Power BI
 
-### Step 5 — Create Consolidated View
+Open the Power BI `.pbix` file and connect/refresh the PostgreSQL data source if required.
 
-The Python workflow creates a PostgreSQL view that combines the required tables using `UNION`.
-
-### Step 6 — Connect Power BI
-
-Power BI connects to the consolidated PostgreSQL view.
-
-### Step 7 — Analyze and Visualize
-
-The consolidated data is used to create interactive Power BI dashboards for race, lap, sector, speed, and driver analysis.
+The dashboard uses the consolidated PostgreSQL view for visualization.
 
 ---
 
-# 🔐 Database Credentials
+# 🔐 Credentials & Security
 
-Database credentials are required to execute the Python-to-PostgreSQL workflow.
+The project requires database credentials to establish the Python-to-PostgreSQL connection.
 
-**Do not publish real database passwords, API keys, or other sensitive credentials in the GitHub repository.**
+**Never commit real passwords, API keys, database credentials, or other sensitive information to a public GitHub repository.**
 
-Use your own local credentials when running the notebook.
+Use your own local credentials when running the project.
 
 ---
 
-# 📌 Key Features
+# ⭐ Key Features
 
-* Formula 1 data extraction using FastF1
-* Miami and Abu Dhabi Grand Prix analysis
-* 2023–2025 data
-* Python-based data processing
-* Automated PostgreSQL table upload
-* Automated consolidated-view creation
-* Multiple-table `UNION`
-* PostgreSQL-based data storage
-* Power BI integration
-* Interactive race analytics
-* Lap, sector, speed, and driver analysis
+* 🏎️ Formula 1 race data extraction using FastF1
+* 📅 Miami and Abu Dhabi Grand Prix analysis
+* 📊 2023–2025 race data
+* 🐍 Python-based data processing
+* 📓 Jupyter Notebook analysis
+* 🐘 PostgreSQL database integration
+* 🔄 Automated table upload from Python
+* 🔗 Consolidated PostgreSQL view
+* 🔀 Multiple-table `UNION`
+* 📊 Power BI interactive dashboards
+* ⏱️ Lap analysis
+* 📐 Sector analysis
+* ⚡ Speed analysis
+* 👤 Driver comparison
 
 ---
 
@@ -354,15 +377,17 @@ The workflow combines:
 
 **FastF1 → Python/Jupyter → PostgreSQL → Power BI**
 
-Python handles the data extraction, processing, PostgreSQL integration, table upload, and consolidated-view creation, while PostgreSQL provides the structured database layer and Power BI provides the final interactive visualization layer.
+Python handles the data extraction, processing, analysis, PostgreSQL connection, table upload, and consolidated-view creation.
+
+PostgreSQL provides the structured database layer for storing the processed tables and consolidated view, while Power BI uses the consolidated view to deliver interactive Formula 1 analytics.
 
 ---
 
 # 👤 Author
 
-**Sai Srujan**
+**Srujan**
 
+B.Tech — Computer Science Engineering
 
-GitHub: https://github.com/Srujanjonnala9/
-
-LinkedIn: https://www.linkedin.com/in/srujanj05/
+* GitHub: [Add your GitHub profile link]
+* LinkedIn: [Add your LinkedIn profile link]
