@@ -26,10 +26,6 @@ Python and Jupyter Notebook handle the data extraction, processing, PostgreSQL i
 
 # 🏗️ System Architecture
 
-<p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1HHEYujTVXl5BBUCKahZZ7WNS_9pj930u" alt="F1 Race Analytics System Architecture" width="900">
-</p>
-
 ### Architecture Flow
 
 **FastF1 → Jupyter Notebook → PostgreSQL → Power BI**
