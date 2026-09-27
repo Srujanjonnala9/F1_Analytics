@@ -223,11 +223,7 @@ The dashboard provides:
 * Speed analysis
 * Interactive visualizations
 
-Dashboard screenshots can be added below:
 
-```markdown
-![Dashboard Overview](images/dashboard-overview.png)
-```
 
 ---
 
